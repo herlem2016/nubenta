@@ -1,0 +1,739 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=0">
+
+
+    <title>Nubenta</title>
+    <link href="css/terceros.css" rel="stylesheet" />
+    <style>
+        @media only screen and (min-width: 600px) {
+            html, body {
+                width: 600px;
+                margin: auto;
+            }
+        }
+
+        @font-face {
+            font-family: HelveticaN;
+            src: url(fonts/HelveticaNeue-Light.woff),url(fonts/HelveticaNeue-Medium.ttf);
+            font-weight: 300;
+        }
+		
+		#home{background-image: url(img/bg-3.jpg);}
+
+        html, body {
+            margin: 0px auto 0px auto;
+            font-family: 'HelveticaN';
+            text-rendering: optimizeLegibility;
+            background-color: #fb6b04f5;
+            padding: 0px;
+            height: 100%;
+            width: 100%;
+            min-width: 320px;
+            overflow-x: hidden;
+            position: relative;
+            /*background: linear-gradient(to bottom, rgba(255,255,255,0.9) 0%,rgba(255,255,255,0.9) 100%), url(https://services.meteored.com/img/article/-cuantos-litros-de-agua-hay-en-una-nube--4832-1.jpg) repeat 0 0;background-size:30%;*/
+        }
+
+        .pantalla.activacion {
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            margin: 0px;
+            background-image: url(img/bg-3.jpg);
+            background-size: cover;
+        }
+
+            .pantalla.activacion h2 {
+                text-align: center;
+                margin-top: 40px;
+                margin-bottom: 40px;
+                ;
+                margin-bottom: 10%;
+                color: #b9ced8;
+                letter-spacing: .1em;
+            }
+
+            .pantalla.activacion .btn2 {
+            }
+
+        span.copyright {
+            display: block;
+            text-align: center;
+            margin-top: 40px;
+            width: 100%;
+            color: #848484;
+            text-shadow: 0 1px rgba(255, 255, 255, 0.1);
+            font-size: 0.8em;
+        }
+
+        .main {
+            margin: 0px auto 0px auto;
+            font-family: Verdana;
+            background-color: #15b3db;
+            padding: 0px;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .share img {
+            width: 25px;
+        }
+
+        .logo-centrado {
+            width: 30%;
+            margin: auto;
+            display: block;
+            max-width: 150px;
+        }
+
+        .link-o {
+            display: block;
+            text-align: center;
+            color: #000203;
+            padding-bottom: 30px;
+            font-weight:bolder;
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+        #lista-ulacciones input[type=checkbox] {
+            float: right;
+            margin-right: 40px;
+        }
+
+        div.head img.portada {
+            width: 100%;
+            max-height: 150px;
+        }
+        @media only screen and (min-width: 600px) {
+            div.head img.portada {
+                visibility:hidden;
+            }
+        }
+        div.head img.logo {
+            width: 22%;
+            position: relative;
+            z-index: +1;
+            margin: auto;
+            display: block;
+            margin-top: -60px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            max-width:160px;
+        }
+
+        .notificar-form {
+            border: 1px solid #218ab3;
+            padding: 5px;
+            border-radius: 10px;
+            margin-top: 5px;
+            text-align: center;
+        }
+
+            .notificar-form input {
+                width: 90%;
+                padding: 7px;
+                margin-bottom: 10px;
+            }
+
+            .notificar-form textarea {
+                width: 90%;
+                padding: 7px;
+                height: 50px;
+            }
+			
+			body .pago{padding-top:10px;font-size:1.3em;font-weight:normal;}
+			img.temporal-in{position:absolute;max-width:100%;max-height:100%;transition:opacity 0.2;display:none;z-index:100;bottom:0px;}
+			img.temporal-p{display:block;}
+			img.temporal-out{display:none;}
+			#l-pedido li{padding:10px 0px;}
+			#l-pedido li span{color:blue;}
+			#cuenta-car{transition: transform 1s;}
+			
+
+    </style>
+    <link href="css/index.css" rel="stylesheet" />
+    <style id="css-sizes"></style>
+    <script src="cordova.js"></script>
+    <script src="jquery-1.11.3.min.js"></script>
+    <script>
+        var url = "https://nubenta.softronel.com.mx:444/";
+		$.ajaxSetup({
+			xhrFields: {
+			   withCredentials: true
+			},
+			crossDomain: true
+		});
+        $.support.cors = true;
+
+    </script>
+
+    <link href="jqueryui/jquery-ui.min.css" rel="stylesheet" />
+    <script src="jqueryui/jquery-ui.min.js"></script>
+    <script src="script.js"></script>
+    <script src="chartjs/chart.js"></script>
+    <script src="chartjs/utils.js"></script>
+</head>
+<body unselectable="on" onselectstart="return false;" >
+	<audio style="display:none;" id="notif">
+	  <source src="audios/notif-2.mp3" type="audio/mp3">
+	</audio>
+	<audio style="display:none;" id="basura">
+	  <source src="audios/notif.mp3" type="audio/mp3">
+	</audio>
+    <section class="pantalla activacion" id="activacion" style="display:none;z-index:1000;height:auto !important;">
+        <form id="frmActivacion" onsubmit="return false;" class="">
+            <div>                
+                <img src="" id="smallImage" class="logo" style="width:45%;margin-top: 10%;display: block;margin-left: auto;margin-right: auto;border-radius: 10px;max-width: 220px;" />
+				<h2 style="margin-bottom:1.5em;"><i style="color:#fff;font-size:2em;">Nubenta</i><br /> ¡BIENVENIDO!</h2>
+                
+                <input placeholder="Ingresa el código de activación" style="text-align:center;width:80%;max-width:400px;padding:15px;font-size:1.2em;display:block;margin:auto;margin-top:50px;" name="codigoactivacion" id="codigoactivacion" value="NjAK" />
+                <button class="btn2" style="width:40%;display:block;margin:auto;margin-top:20px;text-align:center;" onclick="ActivarAplicacion();">Continuar</button>
+            </div>
+            <span class="copyright" style="padding-top:50px;">Powered by &#x24B8;softronel , Desarrollo de Tecnología</span>
+        </form>
+    </section>
+
+    <section class="pantalla activacion" id="no-activacion" style="display:none;z-index:1000;">
+        <form id="frmInfoActivacion" onsubmit="return false;" class="edicion">
+            <div>
+                <h2><i style="color:#ff6a00">Nubenta</i><br /> ¡Ya has creado tu usuario!</h2>
+                <div class="leyenda">
+                    <p style="text-align:left;">
+                        Ahora que ya tienes tu usuario, acude a las oficinas de Los Amores Tellez, con un comprobante de propietario para activar tu servicio.
+                        <br />
+                    </p>
+                </div>
+            </div>
+            <span class="copyright" style="padding-top:50px;">Powered by &#x24B8;softronel, Desarrollo de Tecnología</span>
+        </form>
+    </section>
+
+    <section class="login" id="reg-usuario" style="display:none;z-index:1000;">
+        <form id="frmRegUsuario" onsubmit="return false;" style="min-height: 70%;margin-top:5%;font-size:1.3em">
+            <fieldset style="height: 100%;">
+                <h3 style="text-align:center;"> <i style="color:#fff">Registro en Nubenta&reg;</i></h3>
+                <input placeholder="Nombre de usuario" name="usuario" id="t-nombre" />
+                <input placeholder="E-mail" name="email" />
+                <input placeholder="Contraseña" name="contrasena" />
+                <textarea name="domicilio" placeholder="Ingrese su domicilio con alguna referencia; p.ej. sawuan verde, etc." style="width:80%;display:block;margin:auto;height:60px;font-family:verdana;font-size:12px;padding:4px;" name="ubicacion" ></textarea>                
+                <button class="aceptar" onclick="RegistrarUsuario();">Registrar usuario</button>
+                <a class="link-o" onclick="PantallaMostrar('login','section',true);" style="text-decoration:underline;color:blue;font-size:1em;">Ya tengo usuario</a>
+            </fieldset>
+        </form>
+    </section>
+
+    <section class="login" id="login" style="display:none;z-index:1000;">
+        <form id="frmSesion" onsubmit="return false;" style="min-height: 70%;margin-top:100px;">
+            <fieldset style="height: 100%;">
+                <img src="" id="smallImage" class="logo" style="width:30%;margin-top: 12%;display: block;margin-left: auto;margin-right: auto;border-radius: 10px;" />
+                <div class="leyenda" id="tmp-ley" style="display:none;">
+                    <p style="background-color:#e9e9e9;font-size:1em;">
+                        ¡Ya estas registrado!. Ahora, acude a las oficinas de Administración, con un comprobante de propietario.
+                        <button class="aceptar" style="width:100px;padding:4px;margin-top:5px;" onclick="window.localstorage.setItem('enterado', 1);">Enterado</button>
+                    </p>
+
+                </div>
+                <input placeholder="E-mail" name="email" />
+                <input placeholder="Contraseña" name="contrasena" type="password" />
+                <button class="aceptar" onclick="IniciarSesion('frmSesion');">Iniciar</button>
+                <a class="link-o" onclick="PantallaMostrar('reg-usuario','section',true);">Registrar usuario</a>
+            </fieldset>
+            <span class="copyright">Copyright &#x24B8; 2019 Softronel,Inc.</span>
+        </form>
+    </section>
+
+    <div style="position:relative;display:none;" id="main">
+        <div class="opciones-usuario">
+            <div class="datos-usuario">
+                <img class="home" style="margin-top:-8px;" src="img/home.png" onclick="PantallaMostrar('home', 'section', true);" />
+                <img class="home" style="margin-top:-8px;" src="img/lapiz.png" onclick="MostrarOpcionesHabilitadas();" />
+                <span id="nombre-usuario"></span>
+                <img src="img/user.png" onclick="ToogleOpcionesUsuario('opciones-usuario');" />
+            </div>
+            <ul id="opciones-usuario" style="display:none;position:absolute;z-index:99999;width:90%;margin:0px;">
+                <li><img src="" class="logo logo-centrado" /></li>
+
+
+                <li id="tipo-usuario"></li>
+                <li><i id="u-domicilio"></i></li>
+                <li><b id="u-fraccionamiento"></b></li>
+				<li><button class="btn2" onclick="RegistrarUbicacion();" >Actualizar ubicación</button></li>
+				<li >Domicilio: <a id="domicilio-geo" href="" class="h-dom">No definido</a></li>
+                <li><button class="btn2" onclick="CerrarSesion(); ToogleOpcionesUsuario('opciones-usuario');">Cerrar sesión</button></li>
+            </ul>
+        </div>
+
+        <section class="pantalla home" id="home" style="display:none;background-color:#dbdbdb">
+            <div id="div-home">
+                 <ul class="menu" id="menu">                    
+					<li><button onclick="PantallaMostrar('vigilancia', 'section', true,function(){CargarCatalogo('prodserv',function(){},null,'prodserv-prev',ObtenerProdServ);});" class="ok"><img src="img/comprar1.png" />Comprar</button></li>					
+					<li><button onclick="PantallaMostrar('prodserv','section',false);" class="ok"><img src="img/vender.png" />Vender</button></li>
+                </ul>   
+                <ul class="menu" style="display:none;" id="menu-vig">
+                    <!--<li class="alarma">Alarma Vecinal</li>-->
+                    <li><button onclick="PantallaMostrar('comunicados','section');" class="ok"><img src="img/homec.png" />Inicio</button></li>
+                    <li><button onclick="PantallaMostrar('directorio','section');" class="ok"><img src="img/directorio.png" />Directorio</button></li>
+                    <li><button onclick="PantallaMostrar('notificaciones','section');" class="ok"><img src="img/notificaciones.png" />Actividad</button></li>
+                    <li><button onclick="PantallaMostrar('vigilancia', 'section', false, function () { var tabInicioVig = document.getElementById('tab-inicio-vig'); TabMostrar(tabInicioVig, tabInicioVig.parentNode, 'visitas', 'vigilancia', function () { }); });" class="ok"><img src="img/vigilancia.png" />Seguridad</button></li>
+                    <li><button onclick="window.open(url + 'reglamento_interno.pdf','_blank');" class="ok"><img src="img/docs.png" />Reglamento Interno</button></li>
+                </ul>
+                <ul class="menu" style="display:none;" id="menu-revcuotas">
+                    <li><button onclick="PantallaMostrar('aportaciones', 'section', true, function () { CargarCatalogo('ap_domicilios3', function (xmlDoc) { MostrarAportaciones(xmlDoc);});},'lista-ap_domicilios3');" class="ok"><img src="img/aportaciones.png" />Pagos</button></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="pantalla safra" id="safra">
+
+            <div class="detalle" id="detalle-safra">
+                <div class="titulo">safra<button class="regresar" onclick="Mostrar('detalle-safra', 'lista-safra'); ">cerrar</button></div>
+                <div class="btns-up"><button class="edit-btn" clave_funcion="3" style="display:none;" control="edit-safra" id="edit-safra" onclick="IniciarEditar(false,'safra');"><img src="img/edit.png" /></button><hr class="clearn" /></div>
+                <div id="wrap-detalle-safra">
+                    <p>
+                        Gracias Por utilizar SAFRA!
+                    </p>
+                    <span class='logo-centrado'><img src="img/Titan_Company_Logo.png" /></span>
+                    <span class='campo'><label>Nombre del condominio o fraccionamiento</label><span>Fraccionamiento Rinconadas Esmeralda</span></span>
+                    <span class='campo'><label>Domicilio</label>Zempoala Hidalgo</span>
+                </div>
+                <div class="lista pantalla-3" id="lista-safra">
+                    <div class="titulo">Licencias adquiridas</div>
+                    <div class="agregar" id="edicion-licencia" style="display:none;"><button clave_funcion="5" control="edicion-licencia" onclick="IniciarEditar(true,'safra');">Comprar nueva licencia</button></div>
+                    <ul class="lista seleccionable">
+                        <li class="item" onclick="Mostrar('lista-notificaciones','detalle-notificaciones');">
+                            <span class="t-1">Licencia : 0025</span>
+                            <span class="t-2">Vigencia:  17 febrero 2017 al 17 febrereo 2018</span>
+                            <span class="t-3">Adquirida 17 Febrero del 2017 5:25 pm</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="detalle" id="detalle-licencia" style="display:none;">
+                <div class="titulo">licencia<button class="regresar" onclick="Mostrar('detalle-licencia', 'lista-licencia');"><img src="img/back.png" /></button></div>
+                <div class="btns-up"><button class="edit-btn" clave_funcion="3" style="display:none;" control="edit-com-3" id="edit-com-3" onclick="IniciarEditar(false,'licencia');"><img src="img/edit.png" /></button><button style="display:none;" onclick="IniciarEliminar(this,'licencia');" clave_funcion="4" control="del-com-4" id="del-com-4" class="delete-btn"><img src="img/del.png" /></button><hr class="clearn" /></div>
+                <div class="pantalla-3" id="wrap-detalle-licencia"></div>
+            </div>
+            <div class="edicion " style="display:none;" id="p-edicion-safra">
+                <div class="titulo">Edición de safra <button class="regresar" id="cancelar-edit-safra"><img src="img/back.png" /></button><hr class="clearn" /></div>
+                <form class="pantalla-3" id="frm-edit-safra" onsubmit="return false;">
+                    <fieldset style="border:0px;">
+                        <span class='campo'><label>Nombre del condominio o fraccionamiento</label><input name="nombre" /></span>
+                        <span class='campo'><label>Domicilio</label><input name="nombre" /></span>
+                        <span class='campo'><label>Logo(Formato .JPG o .NPG)</label><input type="file" name="nombre" /></span>
+                        <span class='campo'><label>Responsable del sistema</label><input type="file" name="nombre" /></span>
+                        <button class="aceptar" style="margin-top:30px;margin-bottom:50px;" onclick="Guardar(this,'safra', function () { LimpiarForm('safra');CargarCatalogo(catalogo);Mostrar('p-edicion-safra','lista-safra');});">Aceptar</button>
+                    </fieldset>
+                </form>
+            </div>
+        </section>
+
+        <section class="pantalla usuarios" id="usuarios">
+
+            <div class="edicion pantalla-2" id="p-edicion-config">
+                <button class="aceptar" style="margin-top:20px;" onclick="CargarCatalogo('ap_domicilios', function(){CambioPantalla('lista-ap_domicilios','p-edicion-config');});">Domicilios</button>
+                <button class="aceptar" style="margin-top:20px;display:none;" id="conf-usu" control="conf-usu" clave_funcion="2" onclick="CargarCatalogo('usuarios', function () { CambioPantalla('lista-usuarios','p-edicion-config'); });">Usuarios</button>
+                <button class="aceptar" style="margin-top:20px;display:none;" id="conf-acciones" control="conf-acciones" clave_funcion="9" onclick="CargarCatalogo('cargos', function () { CambioPantalla('lista-cargos','p-edicion-config'); });">Editar permisos</button>
+                <button class="aceptar" style="margin-top:20px;display:none;" id="conf-f1" control="conf-f1" clave_funcion="2" onclick="CambioPantalla('config-general','p-edicion-config');">Configuraciones generales</button>
+                <button class="aceptar" style="margin-top:20px;display:none;" id="conf-f2" control="conf-f2" clave_funcion="2" onclick="EjecutarRestriccionTags_();">Ejecutar restricción de TAG's</button>
+                <button class="aceptar" style="margin-top:20px;display:none;" id="conf-f3" control="conf-f3" clave_funcion="2" onclick="VerConfigurarPagos();">Configurarción de Pagos</button>
+            </div>
+
+            <!--config_pagosuracion de pagos-->
+            <div class="lista" id="lista-config_pagos" redim="redim-config_pagos" style="display:none;">
+                <div class="titulo"><span>Configuración Pagos</span><button class="regresar" id="cancelar-lista-config_pagos" onclick="CambioPantalla('p-edicion-config', 'lista-config_pagos');"><img src="img/back.png" /></button><button class="buscar-min" onclick="MostrarBuscar('b-config_pagos','config_pagos','redim-config_pagos');"><img src="img/buscar.png" /></button><hr class="clearn" /></div>
+                <div class="busqueda" id="b-config_pagos" style="display:none;"><input placeholder="Buscar" onkeypress="if (ValidarEnter(event)) { CargarCatalogo('config_pagos', undefined, { buscar: this.value});}" /></div>
+                <div class="agregar" id="edicion-config_pagos" style="display:none;"><button clave_funcion="2" control="edicion-config_pagos" onclick="IniciarEditar(true,'config_pagos',2);">Agregar configuración</button></div>
+                <div id="redim-config_pagos" class="pantalla-31" classToggle="pantalla-31,pantalla-31" hide="b-config_pagos">
+                    <ul class="lista seleccionable"></ul>
+                </div>
+            </div>
+
+            <div class="detalle" id="detalle-config_pagos" style="display:none;">
+                <div class="titulo">Detalle de configuración<button class="regresar" onclick="CambioPantalla('lista-config_pagos','detalle-config_pagos');"><img src="img/back.png" /></button></div>
+                <div class="btns-up" id="edit-config_pagos" style="display:none;"><button class="edit-btn" clave_funcion="20" control="edit-config_pagos" onclick="IniciarEditar(false,'config_pagos',2);"><img src="img/edit.png" /></button><button onclick="IniciarEliminar(this, 'config_pagos');" class="delete-btn"><img src="img/del.png" /></button><hr class="clearn" /></div>
+                <div class="detalle-w pantalla-3" id="wrap-detalle-config_pagos"></div>
+            </div>
+
+            <div class="edicion" style="display:none;" id="p-edicion-config_pagos">
+                <div class="titulo">Edición de configuración de Pagos <button class="regresar" id="cancelar-edit-config_pagos" onclick="CambioPantalla('detalle-config_pagos', 'p-edicion-config_pagos');"><img src="img/back.png" /></button><hr class="clearn" /></div>
+                <form class="pantalla-2" id="frm-edit-config_pagos" onsubmit="return false;">
+                    <fieldset style="border:0px;">
+                        <label>Descripción</label><input name="descripcion" id="desc-config_pagos" />
+                        <label>Cuota</label><input name="cuota" id="cuota-config_pagos" />
+                        <label>Porcentaje de mora</label><input name="porcent_mora" id="porcent_mora-config_pagos" />
+
+                        <label>Cantidad de meses descuento</label><input name="ctd_mes_dcto" id="ctd_mes_dcto" />
+                        <label>Día de corte</label><input name="dia_corte" id="cp_dia_corte" />
+                        <div style="text-align:center;">
+                            <span>Paquete</span><input type="radio" value="es_paq" name="cond_pag" style="width:auto;display:inline;margin-left:15px;" />
+                            <span style="padding-left:50px;">Mayor que</span><input type="radio" value="es_mayor_que" name="cond_pag" style="width:auto;display:inline;margin-left:15px;" />
+                        </div>
+                        <label>Es configuración por default</label><div style="text-align:center;"><input type="checkbox" value="true" name="cat_default" style="width:auto;display:inline;" id="cat_default" /></div>
+
+                        <input name="esNuevo" type="hidden" id="op-config_pagos" />
+                        <input name="clave" type="hidden" id="clave-config_pagos" />
+
+                        <button class="aceptar" style="margin-top:30px;margin-bottom:50px;" onclick="Guardar(this, 'config_pagos', function () { CargarCatalogo(catalogo, function () { }, {domicilio:document.getElementById('dom-conv').value});LimpiarForm('config_pagos');Mostrar('p-edicion-config_pagos','lista-config_pagos');});">Aceptar</button>
+                    </fieldset>
+                </form>
+            </div>
+            <!---->
+
+            <div class="lista" id="config-general" style="display:none;">
+                <div class="titulo">Configuraciónes Generales<button class="regresar" onclick="CambioPantalla('p-edicion-config', 'config-general');"><img src="img/back.png" /></button><hr class="clearn" /></div>
+                <fieldset id="cuota-men" style="border:1px solid #218ab3;padding:20px 0px 20px 0px;border-radius:10px;margin-top:25px;">
+                    <div class="edicion">
+                        <label>Número máximo de Solicitudes en Atención a Residentes</label><input name="max-sol-at-res" value="3" />
+                    </div>
+                </fieldset>
+                <form id="carga-pagos" onsubmit="return false;" target="consola_2" method="post" enctype="multipart/form-data" action="/logic/controlador.aspx?op=CargaMasivaCuotas&seccion=aportaciones">
+                    <fieldset style="border:1px solid #218ab3;padding:20px 0px 20px 0px;border-radius:10px;margin-top:25px;">
+                        <div class="edicion">
+                            <label>Carga masiva de pagos</label>
+                            <input type="file" name="exlscuot" />
+                            <button class="aceptar" style="margin-top:20px;" onclick="CargaMasivaCuotas();">Ejecutar proceso</button>
+                        </div>
+                    </fieldset>
+                </form>
+                <fieldset id="cuota-men" style="border:1px solid #218ab3;padding:20px 0px 20px 0px;border-radius:10px;margin-top:25px;">
+                    <div class="edicion">
+                        <label>Reseset Dispositivo</label>
+                        <input type="text" name="_query_conexion" />
+                        <button class="aceptar" style="margin-top:20px;" onclick="ResetCPanel();">Ejecutar proceso</button>
+                    </div>
+                </fieldset>
+                <iframe name="consola_2" id="consola_2" style="display:none;"></iframe>
+            </div>
+
+            <div class="lista" id="lista-ap_domicilios" style="display:none;" redim="redim-ap_domicilios">
+                <div class="titulo">Lista de Domicilios<button class="regresar" onclick="CambioPantalla('p-edicion-config', 'lista-ap_domicilios');"><img src="img/back.png" /></button><button class="buscar-min" onclick="MostrarBuscar('b-ap_dom', 'ap_domicilios', 'redim-ap_domicilios', 'pantalla-2', 'pantalla-21');"><img src="img/buscar.png" /></button><hr class="clearn" /></div>
+                <div class="busqueda" id="b-ap_dom" style="display:none;"><input placeholder="Buscar" onkeypress="if(ValidarEnter(event)){CargarCatalogo('ap_domicilios', undefined, { buscar: this.value });}" /></div>
+                <div class="agregar" id="edicion-ap_domicilios" style="display:none;"><button clave_funcion="3" control="edicion-ap_domicilios" onclick="IniciarEditar(true,'ap_domicilios',2);">Agregar Domicilio</button></div>
+                <ul class="lista seleccionable pantalla-2" id="redim-ap_domicilios" classToggle="pantalla-2, pantalla-31" hide="b-ap_dom"></ul>
+            </div>
+            <div class="detalle" id="detalle-ap_domicilios" style="display:none;">
+                <div class="titulo">Detalle de Domicilio<button class="regresar" onclick="Mostrar('detalle-ap_domicilios', 'lista-ap_domicilios');"><img src="img/back.png" /></button></div>
+                <div class="btns-up" id="del-dom-4" style="display:none;"><button class="edit-btn" onclick="IniciarEditar(false,'ap_domicilios');"><img src="img/edit.png" /></button><button onclick="CancelarAportacion(this,'ap_domicilios');" clave_funcion="3" control="del-dom-4" class="delete-btn"><img src="img/del.png" /></button><hr class="clearn" /></div>
+                <div class="detalle-w pantalla-21" id="wrap-detalle-ap_domicilios"></div>
+            </div>
+            <div class="edicion" style="display:none;" id="p-edicion-ap_domicilios">
+                <form onsubmit="return false;" id="frm-edit-ap_domicilios">
+                    <fieldset>
+                        <div class="titulo">Editar Domicilio<button class="regresar" id="cancelar-edit-ap_domicilios" onclick="Mostrar('p-edicion-ap_domicilios','lista-ap_domicilios');"><img src="img/back.png" /></button><hr class="clearn" /></div>
+                        <div class="pantalla-2">
+                            <input name="esNuevo" type="hidden" id="op-ap_domicilios" />
+                            <input name="clave" type="hidden" id="clave-ap_domicilios" />
+                            <label>Titular</label><input name="titular" id="dom-titular" />
+                            <label>Fecha de entrega</label><input name="fecha_entrega" id="fecha_entrega" placeholder="dd/mm/aaa" />
+                            <label>Domicilio</label><input name="calle" id="dom-calle" placeholder="Calle" />
+                            <div class="nos_dom"><input name="numero" id="dom-numero" placeholder="Número" style="margin-left:0px;" /><input name="no_interior" id="dom-no_int" placeholder="No. Int." /><input name="mz" id="dom-mz" placeholder="Mz" /><input name="lt" id="dom-lt" placeholder="Lt." /></div>
+                            <label>Segmento</label><input name="seg" id="seg-dom" />
+
+                            <label>E-mail</label><input name="email" id="email-dom" />
+                            <label>Teléfono</label><input name="telefono" id="tel-dom" />
+                            <label>Día de corte</label><input name="dia_corte" id="dia_corte-dom" />
+                            <label>Clave de configuración de pagos</label><input name="config_pago" id="config_pag-dom" />
+                            <button class="aceptar" style="margin-top:20px;" onclick="GuardarItem(this,'ap_domicilios');">Guardar domicilio</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+
+            <div class="lista" id="lista-tags" style="display:none;">
+                <div class="titulo">Tags del domicilio<button class="regresar" onclick="CambioPantalla('detalle-ap_domicilios', 'lista-tags');"><img src="img/back.png" /></button><hr class="clearn" /></div>
+                <div class="agregar" id="edicion-tags" style="display:none;"><button clave_funcion="11" control="edicion-tags" onclick="IniciarEditar(true, 'tags', 2, undefined, undefined, function () {document.getElementById('d-vehi').value= document.getElementById('detalle-ap_domicilios').getAttribute('clave');});">Agregar tag</button></div>
+                <ul class="lista seleccionable pantalla-21"></ul>
+            </div>
+            <div class="edicion" style="display:none;" id="p-edicion-tags">
+                <form onsubmit="return false;" id="frm-edit-tags">
+                    <fieldset>
+                        <div class="titulo">Editar Vehículo<button class="regresar" id="cancelar-edit-tags" onclick="CambioPantalla('lista-tags','p-edicion-tags');"><img src="img/back.png" /></button><hr class="clearn" /></div>
+                        <div class="pantalla-3">
+                            <input name="esNuevo" type="hidden" id="op-tags" />
+                            <input name="clave" type="hidden" id="clave-tags" />
+                            <input name="d" type="hidden" id="d-vehi" />
+                            <label>Nombre de usuario de TAG</label><input name="usuario_vehi" id="usuario-vehi" placeholder="Usuario del tag" />
+                            <label>Id de usuario en controladora</label><input name="id_usuario_disp" id="id_usuario_disp" placeholder="Id de usuario de controladora" />
+                            <label>Número de Tag</label><input name="no_tag" id="tag-vehi" placeholder="TAG" />
+                            <label>Descripción</label><textarea name="descripcion" id="desc-vehi"></textarea>
+                            <label>Marbete</label><input name="marbete" id="marb-vehi" placeholder="Marbete" />
+                            <label>Placas</label><input name="placas" id="placas-vehi" placeholder="PLACAS" />
+                            <button class="aceptar" style="margin-top:20px;" onclick="GuardarItem(this, 'tags', undefined, { d: document.getElementById('detalle-ap_domicilios').getAttribute('clave') }, function () { EjecutarRestriccionTags(false,document.getElementById('detalle-ap_domicilios').getAttribute('clave')); });">Guardar</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="lista" id="lista-usuarios" style="display:none;">
+                <div class="titulo">Usuarios<button class="regresar" onclick="CambioPantalla('p-edicion-config', 'lista-usuarios');"><img src="img/back.png" /></button><hr class="clearn" /></div>
+                <div class="busqueda"><input placeholder="Buscar" onkeypress="if (ValidarEnter(event)) { CargarCatalogo('usuarios', undefined, { buscar: this.value });}" /></div>
+                <div class="agregar" id="edicion-usuarios" style="display:none;"><button clave_funcion="5" control="edicion-usuarios" onclick="IniciarEditar(true,'usuarios',2);">Agregar usuario</button></div>
+                <ul class="lista seleccionable pantalla-3"></ul>
+            </div>
+
+            <div class="detalle" id="detalle-usuarios" style="display:none;">
+                <div class="titulo">Usuarios<button class="regresar" onclick="Mostrar('detalle-usuarios', 'lista-usuarios');"><img src="img/back.png" /></button></div>
+                <div class="pantalla-3" id="wrap-detalle-usuarios"></div>
+            </div>
+
+            <div id="lista-propdomicilios" style="display:none;">
+                <form onsubmit="return false;" method="post" id="frm-edit-propdomicilios">
+                    <fieldset>
+                        <div class="titulo">Asociar domicilios del propietario<button class="regresar" onclick="CambioPantalla('lista-usuarios', 'lista-propdomicilios'); "><img src="img/back.png" /></button></div>
+                        <div id="usuario-prop" style="padding-bottom:40px;"></div>
+                        <div><input style="float:right;" type="checkbox" onchange="ToggleChecks(this,'lista-uldomicilios');" /></div>
+                        <input type="hidden" name="claveusuario" id="claveusuario" />
+                        <div class="pantalla-3">
+                            <ul class="lista seleccionable" id="lista-uldomicilios"></ul>
+                            <label>Observaciones:</label><textarea name="observaciones" id="observ-prop" style="width:98%;display:block;margin:auto;" maxlength="400"></textarea>
+                            <button class="aceptar" style="margin-top:30px;margin-bottom:50px;" onclick="Guardar(this, 'propdomicilios', function () { LimpiarForm('propdomicilios'); CargarCatalogo(catalogo, function(){},{usuario:document.getElementById('claveusuario').value});});">Guardar configuración</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="edicion " style="display:none;" id="p-edicion-usuarios">
+                <div class="titulo">Edición de usuarios <button class="regresar" id="cancelar-edit-usuarios"><img src="img/back.png" /></button><hr class="clearn" /></div>
+                <form class="pantalla-4" id="frm-edit-usuarios" onsubmit="return false;">
+                    <fieldset style="border:0px;">
+                        <label>Nombre</label><input name="nombre" id="nombre-usu" />
+                        <input name="esNuevo" type="hidden" id="op-usuarios" />
+                        <input name="clave" type="hidden" id="clave-usu" />
+                        <label>Apellidos</label><input name="apellidos" id="apellidos-usu" />
+                        <label>E-mail</label><input name="email" id="email-usu">
+                        <label>Confirme E-mail</label><input name="confemail" />
+                        <label>Contraseña anterior</label><input placeholder="Opcional" name="passant" type="password" />
+                        <label>Contraseña</label><input placeholder="Requerido" name="pass" type="password" />
+                        <label>Confirme contraseña</label><input placeholder="Opcional" name="confpass" type="password" />
+                        <button class="aceptar" style="margin-top:30px;margin-bottom:50px;" onclick="Guardar(this,'usuarios', function () { LimpiarForm('usuarios');CargarCatalogo(catalogo);Mostrar('p-edicion-usuarios','lista-usuarios');});">Aceptar</button>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="lista" id="lista-cargos" style="display:none;">
+                <div class="titulo">Cargos <button class="regresar" onclick="CambioPantalla('p-edicion-config', 'lista-cargos'); "><img src="img/back.png" /></button></div>
+                <div id="UnUsuario"></div>
+                <div class="agregar" id="edicion-cargos" style="display:none;"><button clave_funcion="2" control="edicion-cargos" onclick="IniciarEditar(true,'cargos',2);">Agregar cargo</button></div>
+                <ul class="lista seleccionable pantalla-2"></ul>
+            </div>
+
+            <div class="lista" id="lista-cargosacciones" style="display:none;">
+                <form onsubmit="return false" method="post" id="frm-edit-cargosacciones">
+                    <fieldset>
+                        <div class="titulo">Cargos y acciones<button class="regresar" onclick="Mostrar('lista-cargosacciones', 'lista-cargos'); "><img src="img/back.png" /></button></div>
+                        <div class="btns-up"><button class="edit-btn" clave_funcion="2" style="display:none;" control="edit-ca-3" id="edit-ca-3" onclick="IniciarEditar(false, 'cargos', 2, {a:'lista-cargosacciones',b:'p-edicion-cargos'},document.getElementById('clavecargo').value);"><img src="img/edit.png" /></button><button style="display:none;" onclick="IniciarEliminar(this,'cargos',document.getElementById('clavecargo').value);" control="del-ca-4" id="del-ca-4" class="delete-btn"><img src="img/del.png" /></button><hr class="clearn" /></div>
+                        <div id="UnCargoEd"></div>
+                        <div><input style="float:right;" type="checkbox" onchange="ToggleChecks(this,'lista-ulacciones');" /></div>
+                        <input type="hidden" name="clavecargo" id="clavecargo" />
+                        <div class="pantalla-3">
+                            <ul class="lista seleccionable" id="lista-ulacciones"></ul>
+                            <button class="aceptar" style="margin-top:30px;margin-bottom:50px;" onclick="Guardar(this, 'cargosacciones', function () { LimpiarForm('cargosacciones'); CargarCatalogo(catalogo, function(){},{cargo:document.getElementById('clavecargo').value});});">Guardar configuración</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="edicion " style="display:none;" id="p-edicion-cargos">
+                <div class="titulo">Edición de cargos <button class="regresar" id="cancelar-edit-cargos"><img src="img/back.png" /></button><hr class="clearn" /></div>
+                <form class="pantalla-3" id="frm-edit-cargos" onsubmit="return false;">
+                    <fieldset style="border:0px;">
+                        <label>Nombre del cargo</label><input name="nombre" id="nombre-cargos" />
+                        <input name="esNuevo" type="hidden" id="op-cargos" />
+                        <input name="clave" type="hidden" id="clave-cargos" />
+                        <label>Descripción</label><textarea style="height:180px;" name="descripcion" id="descripcion-cargos"></textarea>
+                        <button class="aceptar" style="margin-top:30px;margin-bottom:50px;" onclick="Guardar(this,'cargos', function () { LimpiarForm('cargos');CargarCatalogo(catalogo);CambioPantalla('lista-cargos','p-edicion-cargos');});">Aceptar</button>
+                    </fieldset>
+                </form>
+            </div>
+        </section>
+
+        <section class="pantalla vigilancia" id="vigilancia">
+		
+			<div class="buscador pantalla-4 edicion" id="buscador-prodserv">				
+				<img class="logo-frac" src="img/logo.png" id="buscar-prodserv"/>				
+				<div id="prodserv-prev">
+					<ul class="lista seleccionable"></ul>
+				</div>	
+				<div style="position:absolute;bottom:0px;padding-bottom:0px;border-bottom:0px;background-color:#fff;" class="busqueda"><input  inputMode="search" type="search" style="width:65%;float:left;border-radius:25px;font-weight:bold;padding-left:16px;margin-bottom:5px;" placeholder="Busque tiendas o productos" id="btn-buscar-ps" onkeypress="if (ValidarEnter(event)) {BuscarProdServ(this);}"/><button style="width:20%;float:right;padding: 5px 1px 6px 5px;" class="btn2" ><img style="float:right;width:77%;" src="img/tiendaok.png"/><span style="float:left;margin-top:3px;">5</span></button><hr class="clearn"/></div>
+			</div>
+			
+			<div class="lista" id="lista-vigilancia" style="display:none;">
+				<div class="titulo pago">
+					<div>TOTAL: <a id="total-c">-E</a></div><button class="regresar" id="cancelar-edit-notificaciones" style="position: absolute;left: 0px;top: 9px;" onclick="CambioPantalla('buscador-prodserv','lista-vigilancia');"><img src="img/back.png" /></button>
+					<div class="agregar"><button onclick="RegistrarPedido();" style="background: linear-gradient(to bottom, #fbd273 5%, #fbae02 100%);border: 1px solid #f9f7f7;padding:10px;">Hacer pedido</button></div>
+				</div>
+				<div class="pantalla-3">
+					<div style="color:blue;">
+						<div style="font-size:0.9em;text-align:center;"><b class="h-neg"></b><br/><a class="h-ubic-neg"></a><br/></div>
+						<div style="font-size: 0.75em;text-align: center;padding: 10px 10px 0px;">Domicilio de entrega:<br/><a class="h-dom"></a></div>
+						<ul class="lista seleccionable" id="l-pedido" style="padding:20px 10px;"></ul>
+					</div>
+					<div id="lista-productos">
+						<ul class="lista seleccionable"></ul>
+					</div>				
+				</div>
+				<div style="position:absolute;bottom:0px;padding-bottom:0px;border-bottom:0px;background: #fff;" class="busqueda"><input inputMode="search" type="search" style="width:65%;float:left;border-radius:25px;font-weight:bold;padding-left:16px;" placeholder="Busque producto" onkeypress="if(ValidarEnter(event)){BuscarProductos(this);}" id="b-prod"/><button style="width:23%;float:right;padding:2px 8px;margin-top:5px;" class="btn2" onclick="window.location.href='#h-neg'"><img style="float:left;width:50%;" src="img/comprar.png"/><span style="float:right;margin-top:5px;position:relative;width:50%;"><b id="cuenta-car" style="position:absolute;right:0px;">-E</b></span></button><hr class="clearn"/></div>
+			</div>
+			
+			<div class="lista" id="desc-prod" redim="redim-cat-prodserv"  style="display:none;position:absolute;margin:3%;width:94%;padding-bottom:20px;z-index:+10;box-shadow: 0px 0px 12px 3px rgba(0,0,0,0.42);background-color:#f7f6f6;top:0px;left:0px;">				
+				<div class="titulo" style="background-color:transparent;">Torta Pachuqueña</div>				
+				<div style="position:relative;" onclick="var in_ctd=document.getElementById('ctd');if(in_ctd.value.trim().length==0){in_ctd.value=0;}in_ctd.value=parseInt(in_ctd.value)+1;" >
+					<img src="https://cdn2.cocinadelirante.com/sites/default/files/styles/gallerie/public/images/2019/09/salsa-para-tortas-ahogada.jpg" style="max-width:100%;max-height:50%;margin:0px auto 20px auto;display:block;"/>
+					<div style="width:100%;position:absolute;bottom:0px;left:0px;background-color:rgba(33,33,33,0.5);">
+						<p style="padding: 5%;text-align: justify;color: #fff;min-height: 60px;">Torta pachuqueña</p>
+					</div>
+				</div>
+				<div><input onkeypress="ResolverKey(event);" inputMode="numeric" onclick="event.stopPropagation();" id="ctd" style="display: block;width: 50%;margin: 10px auto;text-align: center;padding: 5px;font-size: 20px;border-radius: 20px;" value="1"/></div>							
+				<button class="aceptar" style="width:40%;margin:auto;text-align:center;" onclick="AgregarAlPedido();">Ok</button>
+			</div>
+           
+        </section>
+
+        <section class="pantalla notificaciones" id="notificaciones">
+
+            <div class="lista" id="lista-notificaciones">
+                <div class="titulo"><span>Notificaciones</span><button class="buscar-min" onclick="MostrarBuscar('b-noti', 'notificaciones', 'redim-notificaciones');"><img src="img/buscar.png" /></button><hr class="clearn" /></div>
+                <div class="busqueda" id="b-noti" style="display:none;"><input placeholder="Buscar" onkeypress="if (ValidarEnter(event)) { CargarCatalogo('notificaciones', undefined, { buscar: this.value});}" /></div>
+                <ul class="lista seleccionable pantalla-2" classToggle="pantalla-2,pantalla-21" id="redim-notificaciones" hide="b-noti"></ul>
+            </div>
+            <div class="configuracion" style="display:none;" id="p-edicion-notificaciones">
+                <div class="titulo">Edición de comunicados <button class="regresar" id="cancelar-edit-notificaciones"><img src="img/back.png" /></button><hr class="clearn" /></div>
+                <div class="pantalla-3">
+                    <div class="check-activacion"><label class="etiqueta">Hay una diferencia mayor que $ 2000.00, entre saldo físico y saldo real.</label><label class="switch"><input type="checkbox" /><span class="slider round"></span></label><hr class="clearn" /></div>
+                    <div class="check-activacion"><label class="etiqueta">Hay una diferencia mayor que $ 2000.00, entre saldo físico y saldo real.</label><label class="switch"><input type="checkbox" /><span class="slider round"></span></label><hr class="clearn" /></div>
+                    <div class="check-activacion"><label class="etiqueta">Hay una diferencia mayor que $ 2000.00, entre saldo físico y saldo real.</label><label class="switch"><input type="checkbox" /><span class="slider round"></span></label><hr class="clearn" /></div>
+                    <div class="check-activacion"><label class="etiqueta">Hay una diferencia mayor que $ 2000.00, entre saldo físico y saldo real.</label><label class="switch"><input type="checkbox" /><span class="slider round"></span></label><hr class="clearn" /></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pantalla transparencia" id="transparencia">
+            <div class="lista" id="lista-transparencia">
+                <div class="titulo">Transparencia</div>
+                <div class="pantalla-2">
+                    <fieldset style="border:1px solid #2c5878"><legend>Período</legend><input name="fecha1" id="i-fecha1" placeholder="fecha inicial" style="width:40%;text-align:center;float:left;padding:5px;border:1px solid #ddd;" /><input id="i-fecha2" name="fecha2" placeholder="fecha final" style="width:40%;text-align:center;float:right;padding:5px;border:1px solid #ddd;" /></fieldset>
+                    <fieldset id="btn-agregarperiodo" style="border:1px solid #2c5878;display:none;"><legend>Agregar Período de Informe Público</legend>
+						<button clave_funcion="24" control="btn-agregarperiodo" class="aceptar" onclick="AgregarPeriodo();" style="max-width:200px;">Agregar Informe</button>
+					</fieldset>					
+                    <ul class="lista seleccionable"></ul>
+                    <button class="aceptar" id="ver-edocuenta" control="ver-edocuenta" style="margin-top:30px;margin-bottom:50px;display:none;" onclick="MostrarEstadosCuenta(); var obj = document.getElementById('frm-edit-estados_cuenta').style;obj.display=(obj.display=='block'?'none':'block');">Ver Estados de Cuenta Bancarios</button>
+                    <form id="frm-edit-estados_cuenta" onsubmit="return false;">
+                        <fieldset style="border:1px solid #2c5878" id="estado-cuenta">
+                            <legend>Información Bancaria</legend>
+                            <button class="aceptar" onclick="IAgregarImagenTexto('c-e-estados_cuenta', undefined, undefined, true);" id="btn-edocuenta" clave_funcion="2" control="btn-edocuenta" style="display:none;">Alta de estado de cuenta</button>
+                            <input name="clave" type="hidden" value="1" />
+                            <div id="c-e-estados_cuenta" class="detalle" style="overflow-y:auto;font-size:0.9em;color:#444;text-align:center;"></div>
+                            <button class="aceptar" id="grd-edocuenta" clave_funcion="2" control="grd-edocuenta" style="margin-top:30px;margin-bottom:50px;display:none;" onclick="Guardar(this, 'estados_cuenta', function () { MostrarEstadosCuenta(); /*CargarCatalogo('estados_cuenta');*/});">Aceptar</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+
+            <div class="detalle" id="detalle-transparencia" style="display:none;">
+                <div class="titulo"><span>Resultados</span><button class="regresar" id="toggle-aportaciones" onclick="CambioPantalla('lista-transparencia','detalle-transparencia'); "><img src="img/back.png" /></button><hr class="clearn" /></div>
+                <div class="pantalla-2">
+                    <div style="width:90%;margin:auto;overflow:hidden;padding: 20px; margin: 20px auto !important;" id="graf-transparencia" ></div>
+                    <div id="table-resultados-tr" class="lista" style="padding: 20px;"></div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="pantalla prodserv" id="prodserv">
+			<!--Catalogo de tiendas-->
+            <div class="lista" id="lista-prodserv" >
+                <div class="titulo"><button class="regresar" onclick="Mostrar('lista-prodserv','buscador-prodserv');"><img src="img/back.png" /></button>Tus Negocios Registrados</div>
+                <ul class="lista seleccionable pantalla-2"></ul>
+            </div>
+            <div class="detalle" id="detalle-prodserv" style="display:none;">
+                <div class="titulo">Productos y Servicios <button class="regresar" onclick="Mostrar('detalle-prodserv','lista-prodserv');"><img src="img/back.png" /></button></div>                
+                <div class="check-activacion" id="check-negocio" style="display:none;"><label class="etiqueta">Publicar</label><label class="switch"><input type="checkbox" id="activar-negocio" onchange="ActivarNegocio(this);" /><span class="slider round"></span></label><hr class="clearn" /></div>
+                <div class="check-activacion" id="check-aut-anuncio" style="display:none;"><button style="display:none;" control="check-aut-anuncio" clave_funcion="8"></button><label class="etiqueta">Autorizar</label><label class="switch"><input type="checkbox" id="autorizar-negocio" onchange="this.value= document.getElementById('activar-negocio').value; AutorizarNegocio(this);" /><span class="slider round"></span></label><hr class="clearn" /></div>                
+                <div class="pantalla-31" id="wrap-detalle-prodserv"></div>
+            </div>
+
+            <div class="edicion" style="display:none;" id="p-edicion-prodserv">
+                <div class="titulo">Edite los datos de su Negocio <button class="regresar" id="cancelar-edit-prodserv"><img src="img/back.png" /></button><hr class="clearn" /></div>
+                <form class="pantalla-2" id="frm-edit-prodserv" onsubmit="return false;">
+                    <fieldset style="border:0px;">
+                        <label>Nombre de su negocio</label><input name="titulo" />
+                        <input name="esNuevo" type="hidden" id="op-prodserv" />
+                        <input name="clave" type="hidden" id="clave-prodserv" />
+                        <label>Descripción</label><textarea style="height:180px;" name="descripcion"></textarea>
+                        <label>Palabras clave</label><input name="palabrasclave" id="prodserv-palabrasclave" />
+                        <label>Teléfonos </label><input name="telefonos" id="prodserv-telefonos" />
+                        <label>Horario</label><input name="horario" id="prodserv-horario" />
+                        <div id="c-e-prodserv"></div>
+                        <div><button class="adjuntar-btn" style="width:100px;" onclick="IAgregarImagenTexto('c-e-prodserv');"><img src="img/attach.png" /><span class="texto-discreto">Agregar</span></button><hr class="clearn" /></div>
+                        <button class="aceptar" style="margin-top:30px;margin-bottom:50px;" onclick="Guardar(this,'prodserv', function () { LimpiarForm('prodserv');CargarCatalogo(catalogo);Mostrar('p-edicion-prodserv','lista-prodserv');});">Aceptar</button>
+                    </fieldset>
+                </form>
+            </div>
+			<!---->
+			<div class="lista" id="lista-tiposgastos" redim="redim-tiposgastos" style="display:none;">
+				<div class="btns-up"><button class="edit-btn" clave_funcion="6" style="display:none;" control="edit-prodserv-3" id="edit-prodserv-3" onclick="IniciarEditar(false,'prodserv');"><img src="img/edit.png" /></button><button style="display:none;" onclick="IniciarEliminar(this,'prodserv');" clave_funcion="6" control="del-prodserv-4" id="del-prodserv-4" class="delete-btn"><img src="img/del.png" /></button><hr class="clearn" /></div>
+				<div class="titulo"><span>Categorías de productos/servicios</span><button class="buscar-min" onclick="MostrarBuscar('b-tg', 'tiposgastos', 'redim-tiposgastos');"><img src="img/buscar.png" /></button><hr class="clearn" /></div>
+				<div class="busqueda" id="b-tg" style="display:none;"><input placeholder="Buscar" /></div>
+				<div class="agregar" id="edicion-erogacion" style="display:none;"><button clave_funcion="3" control="edicion-erogacion" onclick="IniciarEditar(true,'tiposgastos',2);">Agregar categoría</button></div>
+				<ul class="lista seleccionable pantalla-21" id="redim-tiposgastos" classToggle="pantalla-21, pantalla-3" hide="b-tg"></ul>
+			</div>
+			<div class="edicion" style="display:none;" id="lista-regen_tiposgastos">
+				<input name="clave" type="hidden" id="clave-tiposgastos-OPP" />
+				<div class="titulo">Productos registrados<button class="regresar" onclick="CambioPantalla('lista-tiposgastos','lista-regen_tiposgastos');"><img src="img/back.png" /></button><hr class="clearn" /></div>
+				<div class="agregar" id="edicion-tiposgastos" style="display:none;"><button clave_funcion="3" control="edicion-tiposgastos" onclick="IniciarEditarPago(true,undefined,'tiposgastos');">Registrar producto</button></div>
+				<ul class="lista seleccionable pantalla-3 color"></ul>
+			</div>
+			<div class="detalle" id="detalle-regen_tiposgastos" style="display:none;">
+				<div class="titulo">Detalle de Gasto<button class="regresar" onclick="Mostrar('detalle-regen_tiposgastos', 'lista-regen_tiposgastos'); "><img src="img/back.png" /></button></div>
+				<div class="btns-up" id="del-r-tg" style="display:none;"><button class="edit-btn" onclick="IniciarEditar(false,'regen_tiposgastos');"><img src="img/edit.png" /></button><button onclick="IniciarEliminar(this,'regen_tiposgastos',undefined,undefined,undefined,{catalogo:'regen_tiposgastos'});" clave_funcion="24" control="del-r-tg" class="delete-btn"><img src="img/del.png" /></button><hr class="clearn" /></div>
+				<div class="detalle-w pantalla-3" id="wrap-detalle-regen_tiposgastos"></div>
+			</div>
+			<div class="edicion" style="display:none;" id="p-edicion-tiposgastos">
+				<form onsubmit="return false;" id="frm-edit-tiposgastos">
+					<fieldset>
+						<div class="titulo">Agregar tipo de gasto<button class="regresar" id="cancelar-edit-tiposgastos" onclick="Mostrar('p-edicion-tiposgastos','lista-tiposgastos');"><img src="img/back.png" /></button><hr class="clearn" /></div>
+						<div class="pantalla-3">
+							<input name="esNuevo" type="hidden" id="op-tiposgastos" />
+							<input name="clave" type="hidden" id="clave-tiposgastos" />
+							<label>Tipo de gasto</label><input name="titulo" id="tg-titulo" />
+							<label>Describa a que se refiere el tipo</label><textarea maxlength="300" style="height:100px;" name="descripcion" id="tg-descripcion"></textarea>
+							<button class="aceptar" style="margin-top:20px;" onclick="Guardar(this,'tiposgastos', function () { LimpiarForm('tiposgastos');CargarCatalogo(catalogo);Mostrar('p-edicion-tiposgastos','lista-tiposgastos');});">Guardar</button>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+			<div class="edicion" style="display:none;" id="p-edicion-regen_tiposgastos">
+				<div class="titulo">Editar gasto<button class="regresar" id="cancelar-edit-regen_tiposgastos" onclick="CambioPantalla('lista-regen_tiposgastos','p-edicion-regen_tiposgastos');"><img src="img/back.png" /></button><hr class="clearn" /></div>
+				<div class="pantalla-3">
+					<form onsubmit="return false;" id="frm-edit-regen_tiposgastos">
+						<fieldset>
+							<label>Concepto</label><input name="concepto" id="r_tg_concepto" />
+							<input name="esNuevo" type="hidden" id="op-regen_tiposgastos" />
+							<input name="clave" type="hidden" id="clave-regen_tiposgastos" />
+							<input type="hidden" id="in-regen_tiposgastos" name="indicereferencia" />
+							<input type="hidden" name="tipo_erog" id="tg-tipo_erog" value="1" />
+							<label>Fecha de pago</label><input name="fecha_pago" id='r_tg_fecha_pago'/>
+							<label>Importe</label><input name="importe" id='r_tg_importe' onkeypress="return SoloNumeros(event,'.');" />
+							<label>Descripción</label><textarea style="height:180px;" name="descripcion" id="r_tg_descripcion"></textarea>
+							<label>Imagenes y descripción<hr class="clearn" /></label>
+							<div id="c-e-regen_tiposgastos" style="margin-bottom:20px;"></div>
+							<div><button class="adjuntar-btn" style="width:100px;" onclick="IAgregarImagenTexto('c-e-regen_tiposgastos');"><img src="img/attach.png" /><span class="texto-discreto">Agregar</span></button><hr class="clearn" /></div>
+							<button class="aceptar" style="margin-top:30px;margin-bottom:50px;" onclick="Guardar(this, 'regen_tiposgastos', function () { LimpiarForm('regen_tiposgastos'); CargarCatalogo('regen_tiposgastos', undefined, {tipo_erog:1, clave:document.getElementById('clave-tiposgastos-OPP').params.clave});Mostrar('p-edicion-regen_tiposgastos','lista-regen_tiposgastos');});">Aceptar</button>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+        </section>
+
+    </div>
+</body>
+</html>
