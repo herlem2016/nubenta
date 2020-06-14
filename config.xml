@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <widget id="com.softronel.nubenta" version="1.1.7" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>Productos y Servicios a Domicilio</name>
+  <name>NUBEN Negocios</name>
   <description>
     Aplicación móvil para compra y venta de productos o servicios locales
   </description>
